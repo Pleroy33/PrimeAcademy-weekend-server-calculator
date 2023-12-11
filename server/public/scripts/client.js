@@ -13,10 +13,12 @@ function handlerGetCaluculations() {
         url: "/calculations"
     }).then((response) => {
         console.log(' get is successful!!', response.data);
-        document.getElementById('recentResult').innerHTML = `
-      <ol>${ JSON.stringify(response.data
-        )}</ol>
-        `
+        console.log(Object.values(response.data));
+        const recent =document.getElementById('recentResult')
+        recent.innerHTML+= `<ul>${ JSON.stringify(Object.values(response.data[response.data.length-1]))}</ul>`
+
+        const history = document.getElementById('resultHistory') 
+        history.innerHTML += `<ul>${ JSON.stringify(Object.values(response.data))}</ul>`
     })
         .catch((error) => {
             console.log("server error :(", error);
@@ -45,8 +47,8 @@ function handlePostCalculations(event) {
         }
     })
         .then((response) => {
-            console.log('successfully Added')
-            
+            console.log('successfully Added');
+            handlerGetCaluculations();
         })
         .catch((error) => {
             console.log('error', error)

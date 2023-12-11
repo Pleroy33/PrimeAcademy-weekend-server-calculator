@@ -51,8 +51,8 @@ app.post('/calculations', (rec, res) => {
 
 })
 
-function   doCalculations(input) {//run the logic function that will do the calculating with inputs and operator.(input) {
-  console.log('doCalc is running',input)
+function doCalculations(input) {//run the logic function that will do the calculating with inputs and operator.(input) {
+  console.log('doCalc is running', input)
   console.log("numOne", input.numOne);
   console.log("numTwo", input.numTwo);
   console.log("operator", input.operator);
@@ -60,7 +60,7 @@ function   doCalculations(input) {//run the logic function that will do the calc
   let x = input.numOne;
   let y = input.numTwo;
   let z = input.operator;
-  console.log(x,y,z)
+  console.log(x, y, z)
   switch (z) {
     case "+":
       input.result = parseInt(x) + parseInt(y)
@@ -75,11 +75,13 @@ function   doCalculations(input) {//run the logic function that will do the calc
       break;
 
     case "/":
-      input.result = x/y
+      input.result = x / y
   }
-
+  a = input.result
+  input = {x,z,y,a }
+  input =Object.values(input)
   console.log("new", input);
-  
+
 
 }
 
