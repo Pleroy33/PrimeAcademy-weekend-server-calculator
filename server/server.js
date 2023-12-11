@@ -5,9 +5,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 //  Initialize the Express server.
-const app = express(); 
+const app = express();
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 // Required for Axios
 app.use(bodyParser.json())
 
@@ -21,6 +21,7 @@ app.use(express.static('server/public'));
 // ! Global variable that will contain all of the
 // ! calculation objects:
 let calculations = []
+console.log('This is the calculations storage array', calculations);
 
 
 // ! Here's a wonderful place to make some routes:
@@ -32,8 +33,8 @@ app.get('/calculations', (req, res) => {
   console.log("Request for GET calculations was made")
 
   // Responding will stop the code from running, similar to a return
-  res.sendStatus(200)
-  res.send()
+  //res.sendStatus(200)
+  res.send(calculations)
 })
 
 
@@ -42,13 +43,46 @@ app.post('/calculations', (rec, res) => {
 
   console.log("POST recieved from client:", rec.body);// console log incoming inputs and operator
   console.log("addCalculation before push:", calculations);//console.log calculations before push 
-  //doCalculations(rec.body);//run the logic function that will do the calculating with inputs and operator.
-  console.log(rec.body);//console log the output of the logic function
+  doCalculations(rec.body);//run the logic function that will do the calculating with inputs and operator.
+  console.log("rec.body return:", rec.body);//console log the output of the logic function
   calculations.push(rec.body);//push the output into the  calculations array
   console.log("calculations after push:", calculations);//console log again to see that incoming guesses made it to addGuess
-  res.sendStatus(201);//send http code for succes back to client
+  res.sendStatus(201);//send http code for success back to client
 
 })
+
+function   doCalculations(input) {//run the logic function that will do the calculating with inputs and operator.(input) {
+  console.log('doCalc is running',input)
+  console.log("numOne", input.numOne);
+  console.log("numTwo", input.numTwo);
+  console.log("operator", input.operator);
+
+  let x = input.numOne;
+  let y = input.numTwo;
+  let z = input.operator;
+  console.log(x,y,z)
+  switch (z) {
+    case "+":
+      input.result = parseInt(x) + parseInt(y)
+      break;
+
+    case "-":
+      input.result = x - y
+      break;
+
+    case "*":
+      input.result = x * y
+      break;
+
+    case "/":
+      input.result = x/y
+  }
+
+  console.log("new", input);
+  
+
+}
+
 
 
 
